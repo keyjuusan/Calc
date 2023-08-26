@@ -7,7 +7,7 @@ const datos = [];
 datos.push(0);
 pantalla.value = mostrarDatos();
 let customDatos = [];
-let resultado = 0;
+let resultado="";
 
 function sendValue(e) {
     // console.log(e.textContent)
