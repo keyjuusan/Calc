@@ -1,92 +1,110 @@
 const pantalla = document.querySelector("#pantalla");
 
-pantalla.value = "0";
-let datos = [];
-let uiDatos = "";
+pantalla.addEventListener("keydown",(e)=>{e.preventDefault(); console.log("Buen intento")})
+pantalla.addEventListener("keyup",(e)=>{e.preventDefault(); console.log("Buen intento")})
+
+const datos = [];
+datos.push(0);
+pantalla.value = mostrarDatos();
+let customDatos = [];
+// let uiDatos = "";
 
 function sendValue(e) {
-
-    let tecla = e.textContent;
+    // console.log(e.textContent)
+    let tecla = e.id == "backspace"?e.id:e.textContent;
 
     switch (tecla) {
         case "C":
-            pantalla.value = "0";
-            uiDatos = "";
-            datos.length=0;
+            datos.length = 0;
+            datos.push(0);
+            pantalla.value = mostrarDatos();
+            break;
+
+        case "backspace":
+            // console.log("backspace")
+            datos.splice(datos.length-1,datos.length)
+            pantalla.value = mostrarDatos();
             break;
 
         case "+":
-            datos.push(tecla);
+            if (typeof datos[datos.length - 1] != "string") {
+                datos.push(tecla);
+            }
             pantalla.value = mostrarDatos();
 
             break;
 
         case "-":
-            datos.push(tecla);
+            if (typeof datos[datos.length - 1] != "string") {
+                datos.push(tecla);
+            }
             pantalla.value = mostrarDatos();
 
             break;
 
         case "*":
-            datos.push(tecla);
+            if (typeof datos[datos.length - 1] != "string") {
+                datos.push(tecla);
+            }
             pantalla.value = mostrarDatos();
 
             break;
 
         case "/":
-            datos.push(tecla);
+            if (typeof datos[datos.length - 1] != "string") {
+                datos.push(tecla);
+            }
             pantalla.value = mostrarDatos();
 
             break;
 
         case ".":
-            datos.push(tecla);
+            if (typeof datos[datos.length - 1] != "string") {
+                datos.push(tecla);
+            }
+
             pantalla.value = mostrarDatos();
 
             break;
 
         case "=":
-            // let encontrado = false;
-            for (let i = 0; i < datos.length; i++) {
-                //* Validar si existe una division primero ya que en matematica existe una jerarquia de operaciones y 
-                if (datos[i] = "/") {
-                    let delante = 0;
-                    let atras = 0;
-                    //*Hacer un recorrido hacia delante con la intencion de saber SI EXISTE algo y de ser asi saber la cantidad de digitos que tiene el siguiente numero
-                    for (let j = datos.search("/"); typeof datos[j + 1] != "string" && datos[j + 1] != "."; j++) {
+            customDatos = datos;
+            for (let h = 0; h < datos.length; h++) {
+                for (let i = 0; i < datos.length; i++) {
 
+                    if (datos[i] == "/") {
+                        console.log("division");
+                        customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
+                    } else {
+                        if (datos[i] == "*") {
+                            console.log("multiplicacion");
+                            customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
+                        } else {
+                            switch (datos[i]) {
+                                case "+":
+                                    console.log("suma");
+                                    customDatos.splice(i - 1, i + 2, datos[i - 1] + datos[i + 1]);
+                                    break;
+
+                                case "-":
+                                    console.log("resta");
+                                    customDatos.splice(i - 1, i + 2, datos[i - 1] - datos[i + 1]);
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
                     }
-
-                    //*Hacer un recorrido hacia atras con la intencion de saber SI EXISTE algo y de ser asi saber la cantidad de digitos que tiene el siguiente numero
-
                 }
-                // switch (pantalla.value[i]) {
-                //     case "+":
-                //         console.log("suma")
-                //         break
-
-                //     case "-":
-                //         console.log("resta")
-                //         break
-
-                //     case "*":
-                //         console.log("multiplicacion")
-                //         break
-
-                //     case "/":
-                //         console.log("division")
-                //         break
-                //     default:
-                //         break;
-                // }
             }
-            pantalla.value = 0;
-            datos = "";
+            pantalla.value = customDatos[0];
+            datos.length = 0;
             break;
         default:
-            
+
             if (datos[datos.length - 1] == ".") {
-                datos.splice(datos.length - 2,datos.length,parseFloat(String(datos[datos.length - 2]) +"."+ tecla))
+                datos.splice(datos.length - 2, datos.length, parseFloat(String(datos[datos.length - 2]) + "." + tecla))
                 // pantalla.value = mostrarDatos();
             } else {
                 if (typeof datos[datos.length - 1] == "number") {
@@ -97,7 +115,7 @@ function sendValue(e) {
                     datos.push(parseFloat(tecla));
                     // pantalla.value = mostrarDatos();
                 }
-            }pantalla.value = mostrarDatos();
+            } pantalla.value = mostrarDatos();
             break;
     }
 
@@ -105,7 +123,7 @@ function sendValue(e) {
 }
 
 function mostrarDatos() {
-    uiDatos="";
+    let uiDatos = "";
     // *Acumulando los datos actuales de la variable array "datos" en la variable string "uiDatos" 
     datos.map((dato) => {
         if (typeof dato == "string") {
