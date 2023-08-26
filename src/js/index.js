@@ -7,7 +7,7 @@ const datos = [];
 datos.push(0);
 pantalla.value = mostrarDatos();
 let customDatos = [];
-let resultado="";
+let resultado = "";
 
 function sendValue(e) {
     // console.log(e.textContent)
@@ -88,48 +88,50 @@ function sendValue(e) {
             break;
 
         case "=":
-            customDatos = datos;
-            for (let h = 0; h < datos.length; h++) {
-                for (let i = 0; i < datos.length; i++) {
+            if (datos.length != 0) {
+                customDatos = datos;
+                for (let h = 0; h < datos.length; h++) {
+                    for (let i = 0; i < datos.length; i++) {
 
-                    if (datos[i] == "/") {
-                        console.log("division");
-                        if (datos[i - 2]=="-") {
-                            customDatos.splice(i - 2, i + 2, -datos[i - 1] / datos[i + 1]);
-                        }else{
-                            customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
-                        }
-                    } else {
-                        if (datos[i] == "*") {
-                            console.log("multiplicacion");
-                            if (datos[i - 2]=="-") {
-                                customDatos.splice(i - 2, i + 2, -datos[i - 1] * datos[i + 1]);
-                            }else{
-                                customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
+                        if (datos[i] == "/") {
+                            console.log("division");
+                            if (datos[i - 2] == "-") {
+                                customDatos.splice(i - 2, i + 2, -datos[i - 1] / datos[i + 1]);
+                            } else {
+                                customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
                             }
                         } else {
-                            switch (datos[i]) {
-                                case "+":
-                                    console.log("suma");
-                                    customDatos.splice(i - 1, i + 2, datos[i - 1] + datos[i + 1]);
-                                    break;
+                            if (datos[i] == "*") {
+                                console.log("multiplicacion");
+                                if (datos[i - 2] == "-") {
+                                    customDatos.splice(i - 2, i + 2, -datos[i - 1] * datos[i + 1]);
+                                } else {
+                                    customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
+                                }
+                            } else {
+                                switch (datos[i]) {
+                                    case "+":
+                                        console.log("suma");
+                                        customDatos.splice(i - 1, i + 2, datos[i - 1] + datos[i + 1]);
+                                        break;
 
-                                case "-":
-                                    console.log("resta");
-                                    customDatos.splice(i - 1, i + 2, datos[i - 1] - datos[i + 1]);
-                                    break;
+                                    case "-":
+                                        console.log("resta");
+                                        customDatos.splice(i - 1, i + 2, datos[i - 1] - datos[i + 1]);
+                                        break;
 
-                                default:
-                                    break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            resultado = customDatos[0];
-            pantalla.value = resultado;
-            datos.length = 0;
+                resultado = customDatos[0];
+                pantalla.value = resultado;
+                datos.length = 0;
+            }
             break;
         default:
 
