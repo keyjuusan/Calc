@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./src/css/index.css">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+  <title>CALC</title>
+</head>
+
+<body class="h-[100vh] font-['Typography'] flex flex-col gap-3 items-center">
+  <header>
+    <h1 class="text-3xl text-gray-500">CALC</h1>
+  </header>
+
+  <main class="h-[500px] w-[300px] rounded-md shadow-md shadow-gray-400 flex flex-col items-center gap-6 border-t-[1px]">
+    <input id="pantalla" type="text" class="bg-cyan-50 rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm shadow-gray-300 outline-none text-right text-xl h-10 mt-4 w-[260px]">
+    <div id="buttons" class=" grid grid-cols-4 grid-rows-5 gap-3 place-content-start place-items-center w-[260px] h-[340px]">
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">/</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">*</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">-</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out text-red-600 duration-300">C</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">1</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">2</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">3</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-[7.75rem] active:shadow-sm active:border-b-[1px] ease-out duration-300 row-span-2">+</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">4</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">5</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">6</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">7</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">8</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">9</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-[7.75rem] active:shadow-sm active:border-b-[1px] ease-out duration-300 row-span-2">=</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-[7.75rem] h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-2">0</button>
+
+      <button onclick={sendValue(this)} class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 ">.</button>
+    </div>
+
+  </main>
+
+  <footer class="text-gray-400">Desarrollado por <a href="https://github.com/keyjuusan" class="text-gray-600">Heyker V.</a></footer>
+  <script src="./src/js/index.js"></script>
+</body>
+
+</html>
