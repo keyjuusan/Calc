@@ -128,7 +128,7 @@ function sendValue(e) {
             }
 
             resultado = customDatos[0];
-            pantalla.value = customDatos[0];
+            pantalla.value = resultado;
             datos.length = 0;
             break;
         default:
