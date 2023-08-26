@@ -1,17 +1,17 @@
 const pantalla = document.querySelector("#pantalla");
 
-pantalla.addEventListener("keydown",(e)=>{e.preventDefault(); console.log("Buen intento")})
-pantalla.addEventListener("keyup",(e)=>{e.preventDefault(); console.log("Buen intento")})
+pantalla.addEventListener("keydown", (e) => { e.preventDefault(); console.log("Buen intento") })
+pantalla.addEventListener("keyup", (e) => { e.preventDefault(); console.log("Buen intento") })
 
 const datos = [];
 datos.push(0);
 pantalla.value = mostrarDatos();
 let customDatos = [];
-// let uiDatos = "";
+let resultado = 0;
 
 function sendValue(e) {
     // console.log(e.textContent)
-    let tecla = e.id == "backspace"?e.id:e.textContent;
+    let tecla = e.id == "backspace" ? e.id : e.textContent;
 
     switch (tecla) {
         case "C":
@@ -22,11 +22,15 @@ function sendValue(e) {
 
         case "backspace":
             // console.log("backspace")
-            datos.splice(datos.length-1,datos.length)
+            datos.splice(datos.length - 1, datos.length)
             pantalla.value = mostrarDatos();
             break;
 
         case "+":
+            if (resultado != 0) {
+                datos.push(resultado);
+                resultado = 0;
+            }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
@@ -35,6 +39,10 @@ function sendValue(e) {
             break;
 
         case "-":
+            if (resultado != 0) {
+                datos.push(resultado);
+                resultado = 0;
+            }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
@@ -43,6 +51,10 @@ function sendValue(e) {
             break;
 
         case "*":
+            if (resultado != 0) {
+                datos.push(resultado);
+                resultado = 0;
+            }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
@@ -51,6 +63,10 @@ function sendValue(e) {
             break;
 
         case "/":
+            if (resultado != 0) {
+                datos.push(resultado);
+                resultado = 0;
+            }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
@@ -59,6 +75,10 @@ function sendValue(e) {
             break;
 
         case ".":
+            if (resultado != 0) {
+                datos.push(resultado);
+                resultado = 0;
+            }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
@@ -74,11 +94,19 @@ function sendValue(e) {
 
                     if (datos[i] == "/") {
                         console.log("division");
-                        customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
+                        if (datos[i - 2]=="-") {
+                            customDatos.splice(i - 2, i + 2, -datos[i - 1] / datos[i + 1]);
+                        }else{
+                            customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
+                        }
                     } else {
                         if (datos[i] == "*") {
                             console.log("multiplicacion");
-                            customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
+                            if (datos[i - 2]=="-") {
+                                customDatos.splice(i - 2, i + 2, -datos[i - 1] * datos[i + 1]);
+                            }else{
+                                customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
+                            }
                         } else {
                             switch (datos[i]) {
                                 case "+":
@@ -98,6 +126,8 @@ function sendValue(e) {
                     }
                 }
             }
+
+            resultado = customDatos[0];
             pantalla.value = customDatos[0];
             datos.length = 0;
             break;
