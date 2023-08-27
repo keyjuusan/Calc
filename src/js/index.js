@@ -17,6 +17,7 @@ function sendValue(e) {
         case "C":
             datos.length = 0;
             datos.push(0);
+            resultado = "";
             pantalla.value = mostrarDatos();
             break;
 
@@ -43,9 +44,9 @@ function sendValue(e) {
                 datos.push(resultado);
                 resultado = 0;
             }
-            if (typeof datos[datos.length - 1] != "string") {
-                datos.push(tecla);
-            }
+            // if (typeof datos[datos.length - 1] != "string") {
+            datos.push(tecla);
+            // }
             pantalla.value = mostrarDatos();
 
             break;
@@ -121,6 +122,7 @@ function sendValue(e) {
                                         break;
 
                                     default:
+                                        
                                         break;
                                 }
                             }
@@ -135,19 +137,26 @@ function sendValue(e) {
             break;
         default:
 
-            if (datos[datos.length - 1] == ".") {
-                datos.splice(datos.length - 2, datos.length, parseFloat(String(datos[datos.length - 2]) + "." + tecla))
-                // pantalla.value = mostrarDatos();
-            } else {
-                if (typeof datos[datos.length - 1] == "number") {
-                    datos.splice(datos.length - 1, datos.length, parseFloat(String(datos[datos.length - 1]) + tecla))
-                    // pantalla.value = mostrarDatos();
+            if (datos[datos.length - 1] == "-") {
+                datos.splice(datos.length - 1, datos.length, parseFloat("-" + tecla))
 
-                } else {
-                    datos.push(parseFloat(tecla));
+            } else {
+
+                if (datos[datos.length - 1] == ".") {
+                    datos.splice(datos.length - 2, datos.length, parseFloat(String(datos[datos.length - 2]) + "." + tecla))
                     // pantalla.value = mostrarDatos();
+                } else {
+                    if (typeof datos[datos.length - 1] == "number") {
+                        datos.splice(datos.length - 1, datos.length, parseFloat(String(datos[datos.length - 1]) + tecla))
+                        // pantalla.value = mostrarDatos();
+
+                    } else {
+                        datos.push(parseFloat(tecla));
+                        // pantalla.value = mostrarDatos();
+                    }
                 }
             } pantalla.value = mostrarDatos();
+
             break;
     }
 
