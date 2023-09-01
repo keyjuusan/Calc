@@ -1,13 +1,14 @@
-const pantalla = document.querySelector("#pantalla");
+const pantallaSup = document.querySelector("#pantallaSup")
+const pantallaSub = document.querySelector("#pantallaSub");
 
-pantalla.addEventListener("keydown", (e) => { e.preventDefault(); console.log("Buen intento") })
-pantalla.addEventListener("keyup", (e) => { e.preventDefault(); console.log("Buen intento") })
+pantallaSub.addEventListener("keydown", (e) => { e.preventDefault(); console.log("Buen intento") })
+pantallaSub.addEventListener("keyup", (e) => { e.preventDefault(); console.log("Buen intento") })
 
 const datos = [];
 datos.push(0);
-pantalla.value = mostrarDatos();
+pantallaSub.value = mostrarDatos();
 let customDatos = [];
-let resultado = "";
+let resultado = 0;
 
 function sendValue(e) {
     // console.log(e.textContent)
@@ -17,74 +18,82 @@ function sendValue(e) {
         case "C":
             datos.length = 0;
             datos.push(0);
-            resultado = "";
-            pantalla.value = mostrarDatos();
+            resultado = 0;
+            pantallaSub.value = 0;
+            pantallaSup.value ="";
             break;
 
         case "backspace":
             // console.log("backspace")
-            datos.splice(datos.length - 1, datos.length)
-            pantalla.value = mostrarDatos();
+            
+            if(datos.length==1 || datos.length==0){
+                resultado=0
+                datos[0]=0
+            }else{
+                datos.splice(datos.length - 1, datos.length)
+            }
+            pantallaSub.value = mostrarDatos();
             break;
 
         case "+":
             if (resultado != 0) {
-                datos.push(resultado);
+                datos.push(parseFloat(resultado));
                 resultado = 0;
             }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
-            pantalla.value = mostrarDatos();
+            pantallaSup.textContent = mostrarDatos();
+            pantallaSub.value = 0;
 
             break;
 
         case "-":
             if (resultado != 0) {
-                datos.push(resultado);
+                datos.push(parseFloat(resultado));
                 resultado = 0;
             }
             // if (typeof datos[datos.length - 1] != "string") {
             datos.push(tecla);
             // }
-            pantalla.value = mostrarDatos();
+            pantallaSub.value = mostrarDatos();
 
             break;
 
         case "*":
             if (resultado != 0) {
-                datos.push(resultado);
+                datos.push(parseFloat(resultado));
                 resultado = 0;
             }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
-            pantalla.value = mostrarDatos();
+            pantallaSub.value = mostrarDatos();
 
             break;
 
         case "/":
             if (resultado != 0) {
-                datos.push(resultado);
+                datos.push(parseFloat(resultado));
                 resultado = 0;
             }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
-            pantalla.value = mostrarDatos();
+            pantallaSub.value = mostrarDatos();
 
             break;
 
         case ".":
             if (resultado != 0) {
-                datos.push(resultado);
+                datos.push(parseFloat(resultado));
                 resultado = 0;
             }
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
 
-            pantalla.value = mostrarDatos();
+            pantallaSub.value = mostrarDatos();
 
             break;
 
@@ -93,45 +102,33 @@ function sendValue(e) {
                 customDatos = datos;
                 for (let h = 0; h < datos.length; h++) {
                     for (let i = 0; i < datos.length; i++) {
-
-                        if (datos[i] == "/") {
+                        if (customDatos[i] == "/") {
                             console.log("division");
-                            if (datos[i - 2] == "-") {
-                                customDatos.splice(i - 2, i + 2, -datos[i - 1] / datos[i + 1]);
-                            } else {
-                                customDatos.splice(i - 1, i + 2, datos[i - 1] / datos[i + 1]);
-                            }
+                            customDatos.splice(i - 1, i + 2, customDatos[i - 1] / customDatos[i + 1]);
+
                         } else {
-                            if (datos[i] == "*") {
+                            if (customDatos[i] == "*") {
                                 console.log("multiplicacion");
-                                if (datos[i - 2] == "-") {
-                                    customDatos.splice(i - 2, i + 2, -datos[i - 1] * datos[i + 1]);
-                                } else {
-                                    customDatos.splice(i - 1, i + 2, datos[i - 1] * datos[i + 1]);
-                                }
+                                customDatos.splice(i - 1, i + 2, customDatos[i - 1] * customDatos[i + 1]);
                             } else {
-                                switch (datos[i]) {
-                                    case "+":
-                                        console.log("suma");
-                                        customDatos.splice(i - 1, i + 2, datos[i - 1] + datos[i + 1]);
-                                        break;
-
-                                    case "-":
-                                        console.log("resta");
-                                        customDatos.splice(i - 1, i + 2, datos[i - 1] - datos[i + 1]);
-                                        break;
-
-                                    default:
-                                        
-                                        break;
+                                if (customDatos[i] == "+") {
+                                    console.log("suma");
+                                    customDatos.splice(i - 1, i + 2, customDatos[i - 1] + customDatos[i + 1]);
                                 }
+
                             }
                         }
                     }
                 }
 
-                resultado = customDatos[0];
-                pantalla.value = resultado;
+                console.log(customDatos)
+                customDatos.map((dato) => {
+                    console.log(typeof dato)
+                    resultado += dato
+                })
+
+                // resu ltado = customDatos[0];
+                pantallaSub.value = resultado;
                 datos.length = 0;
             }
             break;
@@ -144,23 +141,22 @@ function sendValue(e) {
 
                 if (datos[datos.length - 1] == ".") {
                     datos.splice(datos.length - 2, datos.length, parseFloat(String(datos[datos.length - 2]) + "." + tecla))
-                    // pantalla.value = mostrarDatos();
+                    // pantallaSub.value = mostrarDatos();
                 } else {
                     if (typeof datos[datos.length - 1] == "number") {
                         datos.splice(datos.length - 1, datos.length, parseFloat(String(datos[datos.length - 1]) + tecla))
-                        // pantalla.value = mostrarDatos();
+                        // pantallaSub.value = mostrarDatos();
 
                     } else {
+                        resultado = 0
                         datos.push(parseFloat(tecla));
-                        // pantalla.value = mostrarDatos();
+                        // pantallaSub.value = mostrarDatos();
                     }
                 }
-            } pantalla.value = mostrarDatos();
+            } pantallaSub.value = mostrarDatos();
 
             break;
     }
-
-
 }
 
 function mostrarDatos() {

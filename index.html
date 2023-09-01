@@ -17,8 +17,10 @@
 
   <main
     class="h-[500px] w-[300px] rounded-md shadow-md shadow-gray-400 flex flex-col items-center gap-6 border-t-[1px]">
-    <input id="pantalla" type="text" disabled
-      class="bg-cyan-50 rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm shadow-gray-300 outline-none text-right text-xl h-10 mt-4 w-[260px]">
+    <div class="bg-cyan-50 flex flex-col justify-center rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm shadow-gray-300  h-11 mt-4 w-[260px] ">
+      <p id="pantallaSup" class="text-sm h-3 items-center flex justify-end"></p>
+      <input id="pantallaSub" type="text" disabled class="outline-none  h-5 text-right text-xl">
+    </div>
     <div id="buttons"
       class=" grid grid-cols-4 grid-rows-5 gap-3 place-content-start place-items-center w-[260px] h-[340px]">
       <button onclick={sendValue(this)}
@@ -64,7 +66,8 @@
         class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">9</button>
 
       <button id="backspace" onclick={sendValue(this)}
-        class="flex items-center justify-center shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1"><img src="./src/assets/delete-icon.svg" alt="" width="22">
+        class="flex items-center justify-center shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1"><img
+          src="./src/assets/delete-icon.svg" alt="" width="22">
       </button>
 
       <button onclick={sendValue(this)}
@@ -79,7 +82,8 @@
 
   </main>
 
-  <footer class="text-gray-400">Desarrollado por <a target="_blank" href="https://github.com/keyjuusan" class="text-gray-600">Heyker
+  <footer class="text-gray-400">Desarrollado por <a target="_blank" href="https://github.com/keyjuusan"
+      class="text-gray-600">Heyker
       V.</a></footer>
   <script src="./src/js/index.js"></script>
 </body>
