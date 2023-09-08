@@ -1,4 +1,4 @@
-const pantallaSup = document.querySelector("#pantallaSup")
+// const pantallaSup = document.querySelector("#pantallaSup")
 const pantallaSub = document.querySelector("#pantallaSub");
 
 pantallaSub.addEventListener("keydown", (e) => { e.preventDefault(); console.log("Buen intento") })
@@ -20,7 +20,6 @@ function sendValue(e) {
             datos.push(0);
             resultado = 0;
             pantallaSub.value = 0;
-            pantallaSup.value ="";
             break;
 
         case "backspace":
@@ -43,8 +42,7 @@ function sendValue(e) {
             if (typeof datos[datos.length - 1] != "string") {
                 datos.push(tecla);
             }
-            pantallaSup.textContent = mostrarDatos();
-            pantallaSub.value = 0;
+            pantallaSub.value = mostrarDatos();;
 
             break;
 
@@ -127,7 +125,7 @@ function sendValue(e) {
                     resultado += dato
                 })
 
-                // resu ltado = customDatos[0];
+                // resultado = customDatos[0];
                 pantallaSub.value = resultado;
                 datos.length = 0;
             }
