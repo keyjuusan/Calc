@@ -4,19 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="./src/assets/calculator.svg" type="image/x-icon">
-  <link rel="stylesheet" href="./src/css/index.css">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="shortcut icon" href="./src/assets/calc-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./src/css/styles.css">
+  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
   <title>CALC</title>
 </head>
 
-<body class="h-[100vh] font-['Typography'] flex flex-col gap-3 items-center">
+<body class="h-full font-['Typography'] flex flex-col gap-3 items-center ">
   <header>
-    <h1 class="text-3xl text-gray-500">CALC</h1>
+    <h1 class=" text-3xl block text-gray-500">CALC</h1>
   </header>
 
   <main
-    class="h-[500px] w-[300px] rounded-md shadow-md shadow-gray-400 flex flex-col items-center gap-6 border-t-[1px]">
+    class=" absolute top-[6rem] sm:static scale-[1.4] sm:scale-100 sm:h-[500px] sm:w-[300px] rounded-md sm:shadow-md shadow-gray-400 flex flex-col items-center gap-6 sm:border-t-[1px]">
       <input id="pantallaSub" type="text" disabled class="bg-cyan-50 rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm text-2xl shadow-gray-300 text-right h-11 mt-4 w-[260px] ">
     <div id="buttons"
       class=" grid grid-cols-4 grid-rows-5 gap-3 place-content-start place-items-center w-[260px] h-[340px]">
@@ -79,7 +80,7 @@
 
   </main>
 
-  <footer class="text-gray-400">Desarrollado por <a target="_blank" href="https://github.com/keyjuusan"
+  <footer class="hidden sm:block text-gray-400">Desarrollado por <a target="_blank" href="https://github.com/keyjuusan"
       class="text-gray-600">Heyker
       V.</a></footer>
   <script src="./src/js/index.js"></script>

@@ -1,0 +1,9 @@
+{
+  "name": "Calc",
+  "start_url": "./",
+  "display": "fullscreen",
+  "icons": [
+    { "src": "./src/assets/calc-icon.svg", "sizes": "144x144" },
+    { "src": "./src/assets/calc-icon-sm.svg", "sizes": "140x140" }
+  ]
+}
