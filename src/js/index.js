@@ -125,7 +125,7 @@ const mostrarResultado = () => {
       });
     }
   });
-  
+
   datos.map((dato, i) => {
     if (datos.length > 1) {
       datos.map((dat, j) => {
@@ -147,7 +147,7 @@ const mostrarResultado = () => {
     }
   });
 
-  console.log(datos);
+  
   resultado = datos[0];
   return resultado;
 };
@@ -174,7 +174,7 @@ const procesoAritmetico = () => {
   datos.map((dato, i) => {
     if (datos.length >= 2) {
       datos.splice(i, 2, datos[i] + datos[i + 1]);
-      console.log(datos);
+      
     }
   });
 };
