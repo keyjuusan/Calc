@@ -125,9 +125,7 @@ const mostrarResultado = () => {
       });
     }
   });
-
-  console.log(datos)
-
+  
   datos.map((dato, i) => {
     if (datos.length > 1) {
       datos.map((dat, j) => {
