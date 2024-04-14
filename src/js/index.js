@@ -1,9 +1,185 @@
-if(navigator.serviceWorker){
-    navigator.serviceWorker.register("./sw.js")
-}
+// if(navigator.serviceWorker){
+//     navigator.serviceWorker.register("./sw.js")
+// }
 
-// const pantallaSup = document.querySelector("#pantallaSup")
 const pantallaSub = document.querySelector("#pantallaSub");
+
+const datos = [];
+let iniciado = false;
+
+const expRegSimbolos = /^[+\-*/c=]$/i;
+const expRegNumeros = /^[0-9.]*$/;
+
+// POR DEFEFECTO:
+const iniciarCalculadora = (valor = "0") => {
+  datos.length = 0;
+  datos.push(valor);
+  pantallaSub.value = valor;
+  iniciado = false;
+};
+iniciarCalculadora();
+
+const btns = document.querySelectorAll("button");
+btns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    const tecla = e.target.id;
+    if (validacion(tecla)) {
+      // if(!expRegNumeros.test(tecla) && !iniciado){
+        // e.preventDefault()
+      // }else{
+        guardarDato(tecla);
+        logicaCalculadora(tecla);
+      // }
+    }
+  });
+});
+
+window.addEventListener("keydown", (e) => {
+  const tecla = e.key;
+
+  if (validacion(tecla)) {
+    // if(!expRegNumeros.test(tecla) && !iniciado){
+      // e.preventDefault()
+    // }else{
+      guardarDato(tecla);
+      logicaCalculadora(tecla);
+    // }
+  }
+});
+
+btns.forEach((btn) => {
+  btn.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  });
+});
+
+const validacion = (tecla) => {
+  // INICIO DE LA VALIDACION DE CARACTERES
+
+  if (!expRegSimbolos.test(tecla) && !expRegNumeros.test(tecla)) {
+    if (tecla !== "Backspace" && tecla !== "Enter") {
+      return false;
+    }
+  }
+
+  return true;
+  // FIN DE LA VALIDACION DE CARACTERES
+};
+
+const logicaCalculadora = (tecla) => {
+  switch (tecla.toLowerCase()) {
+    case "c":
+      iniciarCalculadora();
+      break;
+
+    case "=":
+      // procesoAritmetico();
+      iniciarCalculadora(mostrarResultado());
+      break;
+
+    case "enter":
+      // procesoAritmetico();
+      iniciarCalculadora(mostrarResultado());
+      break;
+
+    case "backspace":
+      if (datos.length === 1) {
+        iniciarCalculadora();
+      } else {
+        pantallaSub.value = "";
+        datos.length--;
+        datos.map((dato) => {
+          pantallaSub.value += dato;
+        });
+      }
+      break;
+
+    default:
+      break;
+  }
+};
+
+const mostrarResultado = () => {
+  let resultado = "";
+
+  datos.map((dato, i) => {
+    if (datos.length > 1) {
+      datos.map((dat, j) => {
+        if (datos[j + 1] !== undefined) {
+          if (
+            expRegNumeros.test(datos[j]) &&
+            expRegNumeros.test(datos[j + 1])
+          ) {
+            datos.splice(j, 2, datos[j] + datos[j + 1]);
+          }
+
+          if(datos.includes("-")){
+            const resta = datos.indexOf("-")
+          if(datos[resta+1]){
+            datos.splice(resta,2,datos[resta]+datos[resta+1])
+          }
+          }
+        }
+      });
+    }
+  });
+
+  console.log(datos)
+
+  datos.map((dato, i) => {
+    if (datos.length > 1) {
+      datos.map((dat, j) => {
+        if (datos[j + 1] !== undefined) {
+          if (datos.includes("/")) {
+            const divi = datos.indexOf("/");
+            if(datos[divi+1]==="+"){datos.splice(divi+1,1,"1")}
+            datos.splice(divi - 1, 3, Number(datos[divi - 1]) / Number(datos[divi + 1]));
+          } else if (datos.includes("*")) {
+            const multi = datos.indexOf("*");
+            if(datos[multi+1]==="+"){datos.splice(multi+1,1,"1")}
+            datos.splice(multi - 1, 3, Number(datos[multi - 1]) * Number(datos[multi + 1]));
+          } else {
+            const resta = datos.indexOf("+");
+            datos.splice(resta - 1, 3, Number(datos[resta - 1]) + Number(datos[resta + 1]));
+          }
+        }
+      });
+    }
+  });
+
+  console.log(datos);
+  resultado = datos[0];
+  return resultado;
+};
+
+const guardarDato = (tecla) => {
+  const expRegGuardable = /^[0-9+-/*.]$/;
+
+  if (expRegGuardable.test(tecla)) {
+    if (!iniciado) {
+      datos[0] = tecla;
+      iniciado = true;
+    } else {
+      datos.push(tecla);
+    }
+
+    pantallaSub.value = "";
+    datos.map((dato) => {
+      pantallaSub.value += dato;
+    });
+  }
+};
+
+const procesoAritmetico = () => {
+  datos.map((dato, i) => {
+    if (datos.length >= 2) {
+      datos.splice(i, 2, datos[i] + datos[i + 1]);
+      console.log(datos);
+    }
+  });
+};
 
 pantallaSub.addEventListener("keydown", (e) => {
   e.preventDefault();
@@ -13,188 +189,3 @@ pantallaSub.addEventListener("keyup", (e) => {
   e.preventDefault();
   console.log("Buen intento");
 });
-
-const datos = [];
-datos.push(0);
-pantallaSub.value = mostrarDatos();
-let customDatos = [];
-let resultado = 0;
-
-function sendValue(e) {
-  // console.log(e.textContent)
-  let tecla = e.id == "backspace" ? e.id : e.textContent;
-
-  switch (tecla) {
-    case "C":
-      datos.length = 0;
-      datos.push(0);
-      resultado = 0;
-      pantallaSub.value = 0;
-      break;
-
-    case "backspace":
-      // console.log("backspace")
-
-      if (datos.length == 1 || datos.length == 0) {
-        resultado = 0;
-        datos[0] = 0;
-      } else {
-        datos.splice(datos.length - 1, datos.length);
-      }
-      pantallaSub.value = mostrarDatos();
-      break;
-
-    case "+":
-      if (resultado != 0) {
-        datos.push(parseFloat(resultado));
-        resultado = 0;
-      }
-      if (typeof datos[datos.length - 1] != "string") {
-        datos.push(tecla);
-      }
-      pantallaSub.value = mostrarDatos();
-
-      break;
-
-    case "-":
-      if (resultado != 0) {
-        datos.push(parseFloat(resultado));
-        resultado = 0;
-      }
-      // if (typeof datos[datos.length - 1] != "string") {
-      datos.push(tecla);
-      // }
-      pantallaSub.value = mostrarDatos();
-
-      break;
-
-    case "*":
-      if (resultado != 0) {
-        datos.push(parseFloat(resultado));
-        resultado = 0;
-      }
-      if (typeof datos[datos.length - 1] != "string") {
-        datos.push(tecla);
-      }
-      pantallaSub.value = mostrarDatos();
-
-      break;
-
-    case "/":
-      if (resultado != 0) {
-        datos.push(parseFloat(resultado));
-        resultado = 0;
-      }
-      if (typeof datos[datos.length - 1] != "string") {
-        datos.push(tecla);
-      }
-      pantallaSub.value = mostrarDatos();
-
-      break;
-
-    case ".":
-      if (resultado != 0) {
-        datos.push(parseFloat(resultado));
-        resultado = 0;
-      }
-      if (typeof datos[datos.length - 1] != "string") {
-        datos.push(tecla);
-      }
-
-      pantallaSub.value = mostrarDatos();
-
-      break;
-
-    case "=":
-      if (datos[0] == 0) {
-        datos.length = 0;
-      }
-
-      if (datos.length != 0) {
-        customDatos = datos;
-        for (let h = 0; h < datos.length; h++) {
-          for (let i = 0; i < datos.length; i++) {
-            if (customDatos[i] == "/") {
-              console.log("division");
-              customDatos.splice(
-                i - 1,
-                i + 2,
-                customDatos[i - 1] / customDatos[i + 1]
-              );
-            } else {
-              if (customDatos[i] == "*") {
-                console.log("multiplicacion");
-                customDatos.splice(
-                  i - 1,
-                  i + 2,
-                  customDatos[i - 1] * customDatos[i + 1]
-                );
-              } else {
-                if (customDatos[i] == "+") {
-                  console.log("suma");
-                  customDatos.splice(
-                    i - 1,
-                    i + 2,
-                    customDatos[i - 1] + customDatos[i + 1]
-                  );
-                }
-              }
-            }
-          }
-        }
-
-        console.log(customDatos);
-        customDatos.map((dato) => {
-          console.log(typeof dato);
-          resultado += dato;
-        });
-
-        // resultado = customDatos[0];
-        pantallaSub.value = resultado;
-        datos.length = 0;
-      }
-      break;
-    default:
-      if (datos[datos.length - 1] == "-") {
-        datos.splice(datos.length - 1, datos.length, parseFloat("-" + tecla));
-      } else {
-        if (datos[datos.length - 1] == ".") {
-          datos.splice(
-            datos.length - 2,
-            datos.length,
-            parseFloat(String(datos[datos.length - 2]) + "." + tecla)
-          );
-          // pantallaSub.value = mostrarDatos();
-        } else {
-          if (typeof datos[datos.length - 1] == "number") {
-            datos.splice(
-              datos.length - 1,
-              datos.length,
-              parseFloat(String(datos[datos.length - 1]) + tecla)
-            );
-            // pantallaSub.value = mostrarDatos();
-          } else {
-            resultado = 0;
-            datos.push(parseFloat(tecla));
-            // pantallaSub.value = mostrarDatos();
-          }
-        }
-      }
-      pantallaSub.value = mostrarDatos();
-
-      break;
-  }
-}
-
-function mostrarDatos() {
-  let uiDatos = "";
-  // *Acumulando los datos actuales de la variable array "datos" en la variable string "uiDatos"
-  datos.map((dato) => {
-    if (typeof dato == "string") {
-      uiDatos += dato;
-    } else {
-      uiDatos += String(dato);
-    }
-  });
-  return uiDatos;
-}

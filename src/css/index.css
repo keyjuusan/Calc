@@ -5,3 +5,9 @@
 html{
     height: 100dvh;
 }
+
+#Backspace{
+    background-image: url("../assets/delete-icon.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+}

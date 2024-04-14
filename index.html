@@ -1,89 +1,139 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json" />
+    <link
+      rel="shortcut icon"
+      href="./src/assets/calc-icon.svg"
+      type="image/svg+xml"
+    />
+    <link rel="stylesheet" href="./src/css/styles.css" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <title>CALC</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="./manifest.json">
-  <link rel="shortcut icon" href="./src/assets/calc-icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./src/css/styles.css">
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-  <title>CALC</title>
-</head>
+  <body class="h-full font-['Typography'] flex flex-col gap-3 items-center">
+    <header>
+      <h1 class="text-3xl block text-gray-500">CALC</h1>
+    </header>
 
-<body class="h-full font-['Typography'] flex flex-col gap-3 items-center ">
-  <header>
-    <h1 class=" text-3xl block text-gray-500">CALC</h1>
-  </header>
-
-  <main
-    class=" absolute top-[6rem] sm:static scale-[1.4] sm:scale-100 sm:h-[500px] sm:w-[300px] rounded-md sm:shadow-md shadow-gray-400 flex flex-col items-center gap-6 sm:border-t-[1px]">
-      <input id="pantallaSub" type="text" disabled class="bg-cyan-50 rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm text-2xl shadow-gray-300 text-right h-11 mt-4 w-[260px] ">
-    <div id="buttons"
-      class=" grid grid-cols-4 grid-rows-5 gap-3 place-content-start place-items-center w-[260px] h-[340px]">
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">/</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">*</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">-</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out text-red-600 duration-300">C</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">1</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">2</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">3</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-[7.75rem] active:shadow-sm active:border-b-[1px] ease-out duration-300 row-span-2">+</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">4</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">5</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">6</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">7</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">8</button>
-
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300">9</button>
-
-      <button id="backspace" onclick={sendValue(this)}
-        class="flex items-center justify-center shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1"><img
-          src="./src/assets/delete-icon.svg" alt="" width="22">
+    <main
+      class="absolute top-[6rem] sm:static scale-[1.4] sm:scale-100 sm:h-[500px] sm:w-[300px] rounded-md sm:shadow-md shadow-gray-400 flex flex-col items-center gap-6 sm:border-t-[1px]"
+    >
+      <input
+        id="pantallaSub"
+        type="text"
+        disabled
+        class="bg-cyan-50 rounded-sm p-1 border-t-[1px] text-cyan-500 shadow-sm text-2xl shadow-gray-300 text-right h-11 mt-4 w-[260px]"
+      />
+      <div
+        id="buttons"
+        class="grid grid-cols-4 grid-rows-5 gap-3 place-content-start place-items-center w-[260px] h-[340px]"
+      >
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="/">/
       </button>
 
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 ">.</button>
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="*">*
+      </button>
 
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-[7.75rem] h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-2">0</button>
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="-">-
+      </button>
 
-      <button onclick={sendValue(this)}
-        class=" shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1">=</button>
-    </div>
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out text-red-600 duration-300"
+        id="C">C
+      </button>
 
-  </main>
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="1">1
+      </button>
 
-  <footer class="hidden sm:block text-gray-400">Desarrollado por <a target="_blank" href="https://github.com/keyjuusan"
-      class="text-gray-600">Heyker
-      V.</a></footer>
-  <script src="./src/js/index.js"></script>
-</body>
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="2">2
+      </button>
 
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="3">3
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-[7.75rem] active:shadow-sm active:border-b-[1px] ease-out duration-300 row-span-2"
+        id="+">+
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="4">4
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="5">5
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="6">6
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="7">7
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="8">8
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id="9">9
+      </button>
+
+        <button
+          id="Backspace"
+          class="flex items-center justify-center shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1"
+        ></button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300"
+        id=".">.
+      </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-[7.75rem] h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-2"
+        id="0" >
+         0
+        </button>
+
+        <button
+          class="shadow-md shadow-gray-300 w-14 h-14 active:shadow-sm active:border-b-[1px] ease-out duration-300 col-span-1 row-span-1"
+        id="="> =
+      </button>
+      </div>
+    </main>
+
+    <footer class=" absolute bottom-[0px] text-gray-400">
+      Desarrollado por
+      <a
+        target="_blank"
+        href="https://github.com/keyjuusan"
+        class="text-gray-600"
+        >Heyker V.</a
+      >
+    </footer>
+    <script src="./src/js/index.js"></script>
+  </body>
 </html>

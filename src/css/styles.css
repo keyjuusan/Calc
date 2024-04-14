@@ -538,6 +538,10 @@ video {
   position: absolute;
 }
 
+.bottom-\[0px\] {
+  bottom: 0px;
+}
+
 .top-\[6rem\] {
   top: 6rem;
 }
@@ -572,10 +576,6 @@ video {
 
 .grid {
   display: grid;
-}
-
-.hidden {
-  display: none;
 }
 
 .h-11 {
@@ -750,6 +750,12 @@ html{
   height: 100dvh;
 }
 
+#Backspace{
+  background-image: url("../assets/delete-icon.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .active\:border-b-\[1px\]:active {
   border-bottom-width: 1px;
 }
@@ -763,10 +769,6 @@ html{
 @media (min-width: 640px) {
   .sm\:static {
     position: static;
-  }
-
-  .sm\:block {
-    display: block;
   }
 
   .sm\:h-\[500px\] {
