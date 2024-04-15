@@ -23,28 +23,13 @@ const btns = document.querySelectorAll("button");
 btns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const tecla = e.target.id;
-    if (validacion(tecla)) {
-      // if(!expRegNumeros.test(tecla) && !iniciado){
-        // e.preventDefault()
-      // }else{
-        guardarDato(tecla);
-        logicaCalculadora(tecla);
-      // }
-    }
+    start(tecla,e)
   });
 });
 
 window.addEventListener("keydown", (e) => {
   const tecla = e.key;
-
-  if (validacion(tecla)) {
-    // if(!expRegNumeros.test(tecla) && !iniciado){
-      // e.preventDefault()
-    // }else{
-      guardarDato(tecla);
-      logicaCalculadora(tecla);
-    // }
-  }
+  start(tecla,e)
 });
 
 btns.forEach((btn) => {
@@ -54,6 +39,17 @@ btns.forEach((btn) => {
     }
   });
 });
+
+const start = (tecla,e)=>{
+  if (validacion(tecla)) {
+    if(expRegSimbolos.test(tecla) && expRegSimbolos.test(datos[datos.length-1])){
+      e.preventDefault()
+    }else{
+      guardarDato(tecla);
+      logicaCalculadora(tecla);
+    }
+  }
+}
 
 const validacion = (tecla) => {
   // INICIO DE LA VALIDACION DE CARACTERES
@@ -104,7 +100,7 @@ const logicaCalculadora = (tecla) => {
 const mostrarResultado = () => {
   let resultado = "";
 
-  datos.map((dato, i) => {
+  datos.map(() => {
     if (datos.length > 1) {
       datos.map((dat, j) => {
         if (datos[j + 1] !== undefined) {
@@ -117,9 +113,18 @@ const mostrarResultado = () => {
 
           if(datos.includes("-")){
             const resta = datos.indexOf("-")
-          if(datos[resta+1]){
-            datos.splice(resta,2,datos[resta]+datos[resta+1])
+
+            if(datos[resta+1]){
+              datos.splice(resta,2,datos[resta]+datos[resta+1])
+            }
           }
+
+          if(datos.includes("+")){
+            const suma = datos.indexOf("+")
+
+            if(datos[suma+1]){
+              datos.splice(suma,2,datos[suma+1])
+            }
           }
         }
       });
@@ -139,8 +144,7 @@ const mostrarResultado = () => {
             if(datos[multi+1]==="+"){datos.splice(multi+1,1,"1")}
             datos.splice(multi - 1, 3, Number(datos[multi - 1]) * Number(datos[multi + 1]));
           } else {
-            const resta = datos.indexOf("+");
-            datos.splice(resta - 1, 3, Number(datos[resta - 1]) + Number(datos[resta + 1]));
+            datos.splice(j, 3, Number(datos[j]) + Number(datos[j + 1]));
           }
         }
       });
