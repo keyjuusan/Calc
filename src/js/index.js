@@ -1,6 +1,6 @@
-if(navigator.serviceWorker){
-    navigator.serviceWorker.register("./sw.js")
-}
+// if(navigator.serviceWorker){
+//     navigator.serviceWorker.register("./sw.js")
+// }
 
 const pantallaSub = document.querySelector("#pantallaSub");
 
@@ -12,10 +12,13 @@ const expRegNumeros = /^[0-9.]*$/;
 
 // POR DEFEFECTO:
 const iniciarCalculadora = (valor = "0") => {
-  datos.length = 0;
-  datos.push(`${valor}`);
-  pantallaSub.value = valor;
-  iniciado = Number(valor) ? true : false;
+  console.log(datos);
+  if (valor !== NaN && valor !== "NaN") {
+    datos.length = 0;
+    datos.push(`${valor}`);
+    pantallaSub.value = valor;
+    iniciado = Number(valor) ? true : false;
+  }
 };
 iniciarCalculadora();
 

@@ -1,5 +1,4 @@
 self.addEventListener("install", (e) => {
-  console.log("instalando...");
 
   e.waitUntil(
     caches
@@ -22,7 +21,6 @@ self.addEventListener("install", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  console.log("Solicitando: "+e.request.url);
   e.respondWith(
     caches
       .match(e.request)
