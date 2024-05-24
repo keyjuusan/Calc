@@ -1,6 +1,6 @@
-// if(navigator.serviceWorker){
-//     navigator.serviceWorker.register("./sw.js")
-// }
+if(navigator.serviceWorker){
+    navigator.serviceWorker.register("./sw.js")
+}
 
 const pantallaSub = document.querySelector("#pantallaSub");
 
@@ -13,9 +13,9 @@ const expRegNumeros = /^[0-9.]*$/;
 // POR DEFEFECTO:
 const iniciarCalculadora = (valor = "0") => {
   datos.length = 0;
-  datos.push(valor);
+  datos.push(`${valor}`);
   pantallaSub.value = valor;
-  iniciado = false;
+  iniciado = Number(valor) ? true : false;
 };
 iniciarCalculadora();
 
@@ -23,13 +23,13 @@ const btns = document.querySelectorAll("button");
 btns.forEach((btn) => {
   btn.addEventListener("click", (e) => {
     const tecla = e.target.id;
-    start(tecla,e)
+    start(tecla, e);
   });
 });
 
 window.addEventListener("keydown", (e) => {
   const tecla = e.key;
-  start(tecla,e)
+  start(tecla, e);
 });
 
 btns.forEach((btn) => {
@@ -40,16 +40,16 @@ btns.forEach((btn) => {
   });
 });
 
-const start = (tecla,e)=>{
+const start = (tecla, e) => {
   if (validacion(tecla)) {
-    if(expRegSimbolos.test(tecla) && expRegSimbolos.test(datos[datos.length-1])){
-      e.preventDefault()
-    }else{
+    if (expRegSimbolos.test(tecla) && datos[datos.length - 1] === tecla) {
+      e.preventDefault();
+    } else {
       guardarDato(tecla);
       logicaCalculadora(tecla);
     }
   }
-}
+};
 
 const validacion = (tecla) => {
   // INICIO DE LA VALIDACION DE CARACTERES
@@ -71,12 +71,10 @@ const logicaCalculadora = (tecla) => {
       break;
 
     case "=":
-      // procesoAritmetico();
       iniciarCalculadora(mostrarResultado());
       break;
 
     case "enter":
-      // procesoAritmetico();
       iniciarCalculadora(mostrarResultado());
       break;
 
@@ -110,20 +108,28 @@ const mostrarResultado = () => {
           ) {
             datos.splice(j, 2, datos[j] + datos[j + 1]);
           }
+        }
+      });
+    }
+  });
 
-          if(datos.includes("-")){
-            const resta = datos.indexOf("-")
+  datos.map(() => {
+    if (datos.length > 1) {
+      datos.map((dat, j) => {
+        if (datos[j + 1] !== undefined) {
+          if (datos.includes("-")) {
+            const resta = datos.indexOf("-");
 
-            if(datos[resta+1]){
-              datos.splice(resta,2,datos[resta]+datos[resta+1])
+            if (datos[resta + 1]) {
+              datos.splice(resta, 2, datos[resta] + datos[resta + 1]);
             }
           }
 
-          if(datos.includes("+")){
-            const suma = datos.indexOf("+")
+          if (datos.includes("+")) {
+            const suma = datos.indexOf("+");
 
-            if(datos[suma+1]){
-              datos.splice(suma,2,datos[suma+1])
+            if (datos[suma + 1]) {
+              datos.splice(suma, 2, datos[suma] + datos[suma + 1]);
             }
           }
         }
@@ -134,24 +140,27 @@ const mostrarResultado = () => {
   datos.map((dato, i) => {
     if (datos.length > 1) {
       datos.map((dat, j) => {
-        if (datos[j + 1] !== undefined) {
-          if (datos.includes("/")) {
-            const divi = datos.indexOf("/");
-            if(datos[divi+1]==="+"){datos.splice(divi+1,1,"1")}
-            datos.splice(divi - 1, 3, Number(datos[divi - 1]) / Number(datos[divi + 1]));
-          } else if (datos.includes("*")) {
-            const multi = datos.indexOf("*");
-            if(datos[multi+1]==="+"){datos.splice(multi+1,1,"1")}
-            datos.splice(multi - 1, 3, Number(datos[multi - 1]) * Number(datos[multi + 1]));
-          } else {
-            datos.splice(j, 3, Number(datos[j]) + Number(datos[j + 1]));
-          }
+        if (datos.includes("/")) {
+          const divi = datos.indexOf("/");
+          datos.splice(
+            divi - 1,
+            3,
+            Number(datos[divi - 1]) / Number(datos[divi + 1])
+          );
+        } else if (datos.includes("*")) {
+          const multi = datos.indexOf("*");
+          datos.splice(
+            multi - 1,
+            3,
+            Number(datos[multi - 1]) * Number(datos[multi + 1])
+          );
+        } else {
+          datos.splice(j, 2, Number(datos[j]) + Number(datos[j + 1]));
         }
       });
     }
   });
 
-  
   resultado = datos[0];
   return resultado;
 };
@@ -161,8 +170,10 @@ const guardarDato = (tecla) => {
 
   if (expRegGuardable.test(tecla)) {
     if (!iniciado) {
-      datos[0] = tecla;
-      iniciado = true;
+      if (/^[0-9\-]$/.test(tecla)) {
+        datos[0] = tecla;
+        iniciado = true;
+      }
     } else {
       datos.push(tecla);
     }
@@ -172,15 +183,6 @@ const guardarDato = (tecla) => {
       pantallaSub.value += dato;
     });
   }
-};
-
-const procesoAritmetico = () => {
-  datos.map((dato, i) => {
-    if (datos.length >= 2) {
-      datos.splice(i, 2, datos[i] + datos[i + 1]);
-      
-    }
-  });
 };
 
 pantallaSub.addEventListener("keydown", (e) => {
