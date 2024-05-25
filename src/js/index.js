@@ -12,7 +12,7 @@ const expRegNumeros = /^[0-9.]*$/;
 
 // POR DEFEFECTO:
 const iniciarCalculadora = (valor = "0") => {
-  console.log(datos);
+  
   if (valor !== NaN && valor !== "NaN") {
     datos.length = 0;
     datos.push(`${valor}`);
@@ -132,33 +132,35 @@ const mostrarResultado = () => {
             const suma = datos.indexOf("+");
 
             if (datos[suma + 1]) {
-              datos.splice(suma, 2, datos[suma] + datos[suma + 1]);
+              datos.splice(suma, 2, datos[suma + 1]);
             }
           }
         }
       });
     }
   });
-
+  
   datos.map((dato, i) => {
     if (datos.length > 1) {
       datos.map((dat, j) => {
-        if (datos.includes("/")) {
-          const divi = datos.indexOf("/");
-          datos.splice(
-            divi - 1,
-            3,
-            Number(datos[divi - 1]) / Number(datos[divi + 1])
-          );
-        } else if (datos.includes("*")) {
-          const multi = datos.indexOf("*");
-          datos.splice(
-            multi - 1,
-            3,
-            Number(datos[multi - 1]) * Number(datos[multi + 1])
-          );
-        } else {
-          datos.splice(j, 2, Number(datos[j]) + Number(datos[j + 1]));
+        if (datos[j + 1] !== undefined) {
+          if (datos.includes("/")) {
+            const divi = datos.indexOf("/");
+            datos.splice(
+              divi - 1,
+              3,
+              String(Number(datos[divi - 1]) / Number(datos[divi + 1]))
+            );
+          } else if (datos.includes("*")) {
+            const multi = datos.indexOf("*");
+            datos.splice(
+              multi - 1,
+              3,
+              String(Number(datos[multi - 1]) * Number(datos[multi + 1]))
+            );
+          } else {
+            datos.splice(j, 2, String(Number(datos[j]) + Number(datos[j + 1])));
+          }
         }
       });
     }
@@ -178,7 +180,13 @@ const guardarDato = (tecla) => {
         iniciado = true;
       }
     } else {
-      datos.push(tecla);
+      if (/^[+*/\-]$/.test(datos[datos.length - 1])) {
+        if (!/^[.]$/.test(tecla)) {
+          datos.push(tecla);
+        }
+      } else {
+        datos.push(tecla);
+      }
     }
 
     pantallaSub.value = "";
@@ -190,9 +198,9 @@ const guardarDato = (tecla) => {
 
 pantallaSub.addEventListener("keydown", (e) => {
   e.preventDefault();
-  console.log("Buen intento");
+  
 });
 pantallaSub.addEventListener("keyup", (e) => {
   e.preventDefault();
-  console.log("Buen intento");
+  
 });
